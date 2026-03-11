@@ -41,9 +41,7 @@ const fullColumns: ColumnConfig[] = [
 
 const tableData = logTableData as unknown as Record<string, unknown>[];
 
-const currentColumns = computed(() =>
-  activeItem.value === "Table h-scroll" ? fullColumns : basicColumns,
-);
+const currentColumns = computed(() => (activeItem.value === "Table h-scroll" ? fullColumns : basicColumns));
 const isScrollable = computed(() => activeItem.value === "Table h-scroll");
 </script>
 
@@ -52,14 +50,7 @@ const isScrollable = computed(() => activeItem.value === "Table h-scroll");
     <SidebarMenu @select="activeItem = $event" />
     <main class="content">
       <TeamView v-if="activeItem === 'Team'" />
-      <SmartTable
-        v-else
-        :key="activeItem"
-        :title="activeItem"
-        :columns="currentColumns"
-        :data="tableData"
-        :horizontal-scroll="isScrollable"
-      />
+      <SmartTable v-else :key="activeItem" :title="activeItem" :columns="currentColumns" :data="tableData" />
     </main>
   </div>
 </template>
@@ -75,7 +66,7 @@ const isScrollable = computed(() => activeItem.value === "Table h-scroll");
 .content {
   flex: 1;
   min-width: 0;
-  overflow: hidden;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
 }
