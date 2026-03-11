@@ -8,17 +8,17 @@ defineProps<{
 }>();
 
 const slots = useSlots();
-function hasSlot(attribute: string) {
-  return !!slots[`cell-${attribute}`];
+function hasSlot(type: string) {
+  return !!slots[`cell-${type}`];
 }
 </script>
 
 <template>
   <tr>
     <td v-for="col in columns" :key="col.attribute">
-      <!-- Custom slot takes priority -->
-      <template v-if="hasSlot(col.attribute)">
-        <slot :name="'cell-' + col.attribute" :value="row[col.attribute]" :row="row" />
+      <!-- Custom slot takes priority (matched by column type) -->
+      <template v-if="hasSlot(col.type)">
+        <slot :name="'cell-' + col.type" :value="row[col.attribute]" :row="row" />
       </template>
 
       <!-- String -->

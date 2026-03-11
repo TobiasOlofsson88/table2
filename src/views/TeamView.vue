@@ -4,14 +4,13 @@ import type { ColumnConfig } from "@/components/SmartTable.vue";
 import teamData from "@/data/teamData.json";
 
 const columns: ColumnConfig[] = [
-  { type: "string", header: "Name", attribute: "name" },
+  { type: "avatar", header: "Name", attribute: "name" },
   { type: "string", header: "Role", attribute: "role" },
   { type: "string", header: "Department", attribute: "department" },
-  { type: "string", header: "Status", attribute: "status" },
   { type: "number", header: "Tasks done", attribute: "tasksDone" },
-  { type: "number", header: "Progress", attribute: "progress" },
+  { type: "progress", header: "Progress", attribute: "progress" },
   { type: "string", header: "Joined", attribute: "joined" },
-  { type: "string", header: "Actions", attribute: "actions" },
+  { type: "actions", header: "Actions", attribute: "actions" },
 ];
 
 const data = teamData as unknown as Record<string, unknown>[];
@@ -25,8 +24,8 @@ function progressClass(v: number) {
 
 <template>
   <SmartTable title="Team" :columns="columns" :data="data">
-    <!-- Avatar + name combined -->
-    <template #cell-name="{ value, row }">
+    <!-- Avatar + name (matches type: "avatar") -->
+    <template #cell-avatar="{ value, row }">
       <div class="cell-user">
         <div class="avatar" :style="{ background: (row as any).color }">
           {{ (row as any).avatar }}
@@ -35,15 +34,7 @@ function progressClass(v: number) {
       </div>
     </template>
 
-    <!-- Status dot -->
-    <template #cell-status="{ value }">
-      <div class="cell-status">
-        <span class="status-dot" :class="'dot-' + value" />
-        <span class="status-label">{{ value }}</span>
-      </div>
-    </template>
-
-    <!-- Progress bar -->
+    <!-- Progress bar (matches type: "progress") -->
     <template #cell-progress="{ value }">
       <div class="cell-progress">
         <div class="progress-bar">
@@ -53,7 +44,7 @@ function progressClass(v: number) {
       </div>
     </template>
 
-    <!-- Action buttons -->
+    <!-- Action buttons (matches type: "actions") -->
     <template #cell-actions="{ row }">
       <div class="cell-actions">
         <button class="action-btn" title="View">
@@ -90,36 +81,6 @@ function progressClass(v: number) {
   color: #fff;
   flex-shrink: 0;
   letter-spacing: 0.3px;
-}
-
-/* Status */
-.cell-status {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.status-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-.dot-active {
-  background: #2a9d5c;
-}
-.dot-away {
-  background: #f4a261;
-}
-.dot-offline {
-  background: #bbb;
-}
-
-.status-label {
-  font-size: 13px;
-  color: #555;
-  text-transform: capitalize;
 }
 
 /* Progress */

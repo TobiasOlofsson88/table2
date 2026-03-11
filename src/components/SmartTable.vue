@@ -3,7 +3,7 @@ import { ref, computed } from "vue";
 import SmartTableRow from "./SmartTableRow.vue";
 
 export interface ColumnConfig {
-  type: "string" | "number" | "checkbox" | "link" | "badge";
+  type: string;
   header: string;
   attribute: string;
 }
@@ -12,12 +12,10 @@ const props = withDefaults(
   defineProps<{
     columns: ColumnConfig[];
     data: Record<string, unknown>[];
-    horizontalScroll?: boolean;
     pageSize?: number;
     title?: string;
   }>(),
   {
-    horizontalScroll: false,
     pageSize: 10,
     title: "Table",
   },
@@ -109,8 +107,8 @@ watch(searchQuery, () => {
 
     <!-- Table card -->
     <div class="table-card">
-      <div class="table-scroll" :class="{ 'is-scrollable': horizontalScroll }">
-        <table :class="{ 'is-wide': horizontalScroll }">
+      <div class="table-scroll">
+        <table>
           <thead>
             <tr>
               <th v-for="col in columns" :key="col.attribute">
@@ -300,13 +298,9 @@ watch(searchQuery, () => {
 }
 
 .table-scroll {
-  overflow-x: hidden;
+  overflow-x: auto;
   scrollbar-width: thin;
   scrollbar-color: #d0d0d0 transparent;
-}
-
-.table-scroll.is-scrollable {
-  overflow-x: auto;
 }
 
 .table-scroll::-webkit-scrollbar {
@@ -319,13 +313,9 @@ watch(searchQuery, () => {
 
 table {
   width: 100%;
+  min-width: max-content;
   border-collapse: collapse;
   table-layout: auto;
-}
-
-table.is-wide {
-  min-width: 2200px;
-  table-layout: fixed;
 }
 
 thead {
