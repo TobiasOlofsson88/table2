@@ -42,7 +42,6 @@ const fullColumns: ColumnConfig[] = [
 const tableData = logTableData as unknown as Record<string, unknown>[];
 
 const currentColumns = computed(() => (activeItem.value === "Table h-scroll" ? fullColumns : basicColumns));
-const isScrollable = computed(() => activeItem.value === "Table h-scroll");
 </script>
 
 <template>
@@ -54,20 +53,3 @@ const isScrollable = computed(() => activeItem.value === "Table h-scroll");
     </main>
   </div>
 </template>
-
-<style scoped>
-.layout {
-  display: flex;
-  height: 100vh;
-  overflow: hidden;
-  background: #f0f0f5;
-}
-
-.content {
-  flex: 1;
-  min-width: 0;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-}
-</style>
