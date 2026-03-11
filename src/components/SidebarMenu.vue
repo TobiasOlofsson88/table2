@@ -40,7 +40,7 @@ function setActive(label: string) {
 <template>
   <aside class="sidebar">
     <div class="sidebar-header">
-      <span class="sidebar-logo">SDP Södertälje</span>
+      <span class="sidebar-logo">Portal</span>
     </div>
 
     <div class="sidebar-filter">
